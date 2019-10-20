@@ -1,4 +1,0 @@
-<view><view class="body-class" hover-class="body-class-hover rollIn animated" hover-stay-time="1000"><text>你好\n 
-			我不好\n
-			真的吗
-			假的</text><view class="body2-class"><view style="{{'color:'+(yanse)+';'}}">1</view><view>2</view><view style="{{(styleObject)}}">3</view></view></view></view>

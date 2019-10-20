@@ -1,1 +1,0 @@
-<view><navigator url="../index/index" id="1"></navigator><map style="width:100%;height:300px;" polyline="{{polyline}}" controls="{{controls}}" latitude="{{latitude}}" longitude="{{longitude}}" markers="{{covers}}" circles="{{circles}}" data-event-opts="{{[['controltap',[['controltap',['$event']]]]]}}" bindcontroltap="__e"></map></view>

@@ -1,1 +1,0 @@
-<scroll-view class="scroll-Y" scroll-top="5" scroll-x="true" data-event-opts="{{[['scrolltoupper',[['upper',['$event']]]]]}}" bindscrolltoupper="__e"><view>d</view><view>a</view><view>ww</view></scroll-view>

@@ -1,2 +1,0 @@
-setCssToHead([".",[1],"body-class{ width: ",[0,500],"; height:500px; background-color:#007AFF; color:white; }\n.",[1],"body-class-hover{ background-color:#FF3333; }\nwx-text{ font-size:13px; }\n.",[1],"body2-class \x3e wx-view:nth-child(2){ color:red; }\n",],undefined,{path:"./pages/demo/demo.wxss"})();
-document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/demo/demo.wxml') } }));
