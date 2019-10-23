@@ -1,19 +1,27 @@
 <template>
 	<view>
-	
-		<scroll-view scroll-x="true" class="index-scroll-bar">
-			<block v-for="item in scrolldata" :key="item.id">
-				<view>{{item.name}}</view>
-			</block>
-		</scroll-view>
+		<view class="scroll-top-view">
+			<scroll-view scroll-x="true" class="index-scroll-bar">
+				<block v-for="(item, index) in scrolldata" :key="item.id">
+					<view class="itemview" :class="{active: choosebar == index}" @tap="bartag(index)">{{item.name}}</view>
+				</block>
+			</scroll-view>
+		</view>
+		<!-- <view class="index-scroll-content">
+			<scroll-view scroll-y="true" >
+				<block v-for="(item, index) in itemsdata" :key = index>
+					<index-info :item="item"></index-info>
+				</block>
+			</scroll-view>
+		</view> -->
 		
 
 		
 	
 		
-		<!-- <block v-for="(item, index) in itemsdata" :key = index>
+		<block v-for="(item, index) in itemsdata" :key = index>
 			<index-info :item="item"></index-info>
-		</block> -->
+		</block>
 	</view>
 </template>
 
@@ -24,42 +32,43 @@
 	export default {
 		data() {
 			return {
+				choosebar:0,
 				scrolldata:[
 					{
 						name:"体育",
-						id:1
+						id:"tiyu"
 					},
 					{
 						name:"美术",
-						id:2
+						id:"meisu"
 					},
 					{
 						name:"音乐",
-						id:3
+						id:"yinyue"
 					},
 					{
 						name:"自然",
-						id:4
+						id:"ziran"
 					},
 					{
 						name:"英语",
-						id:5
+						id:"yingyu"
 					},
 					{
 						name:"数学",
-						id:6
+						id:"shuxu"
 					},
 					{
 						name:"语文",
-						id:7
+						id:"yuwen"
 					},
 					{
 						name:"物理",
-						id:8
+						id:"wuli"
 					},
 					{
 						name:"科学",
-						id:9
+						id:"kexue"
 					},
 				],
 				itemsdata:[
@@ -107,16 +116,15 @@
 		},
 		
 		methods: {
-
+			bartag(index){
+				this.choosebar = index
+			}
 		}
 	}
 </script>
 
 <style>
-	.shiyan0{
-		display: flex;
-		
-	}
+
 	
 	
 	
@@ -124,18 +132,27 @@
 		/* overflow: hidden; */
 	}
 	.index-scroll-bar{
-		/* display: flex;
-		flex-direction: row;
-		flex-wrap: nowrap;
-		width: 100%;
-		overflow: hidden; */
-		/* white-space: nowrap; */
-		/* line-height: 100rpx; */
-		/* height: 100rpx; */
 		border-bottom: 1px solid #c8c7cc;
+		white-space: nowrap;
+		width: 100%;
+		overflow: hidden;
 	}
-	.scroll-bar view{
-		flex:1;
+	.index-scroll-bar .itemview{
+		display: inline-block;
+		text-align: center;
+		line-height: 100rpx;
+		width: 100rpx;
+		color: #555;
+	}
+	.index-scroll-bar .active{
+		color:#09BB07;
 	}
 	
+	
+	
+	.index-scroll-content{
+		width: 100%;
+		height: calc(100%-100rpx);
+	}
+
 </style>
