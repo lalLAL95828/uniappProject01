@@ -1,9 +1,19 @@
 <template>
-	<view class="">
-		<block v-for="(item, index) in itemsdata" :key = index>
-			<index-info :item="item"></index-info>
-		</block>
+	<view>
 	
+		<scroll-view scroll-x="true" class="index-scroll-bar">
+			<block v-for="item in scrolldata" :key="item.id">
+				<view>{{item.name}}</view>
+			</block>
+		</scroll-view>
+		
+
+		
+	
+		
+		<!-- <block v-for="(item, index) in itemsdata" :key = index>
+			<index-info :item="item"></index-info>
+		</block> -->
 	</view>
 </template>
 
@@ -14,6 +24,44 @@
 	export default {
 		data() {
 			return {
+				scrolldata:[
+					{
+						name:"体育",
+						id:1
+					},
+					{
+						name:"美术",
+						id:2
+					},
+					{
+						name:"音乐",
+						id:3
+					},
+					{
+						name:"自然",
+						id:4
+					},
+					{
+						name:"英语",
+						id:5
+					},
+					{
+						name:"数学",
+						id:6
+					},
+					{
+						name:"语文",
+						id:7
+					},
+					{
+						name:"物理",
+						id:8
+					},
+					{
+						name:"科学",
+						id:9
+					},
+				],
 				itemsdata:[
 					{
 						avater:"../../static/demo/userpic/6.jpg",
@@ -65,7 +113,29 @@
 </script>
 
 <style>
+	.shiyan0{
+		display: flex;
+		
+	}
 	
 	
+	
+	.scroll-top-view{
+		/* overflow: hidden; */
+	}
+	.index-scroll-bar{
+		/* display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		width: 100%;
+		overflow: hidden; */
+		/* white-space: nowrap; */
+		/* line-height: 100rpx; */
+		/* height: 100rpx; */
+		border-bottom: 1px solid #c8c7cc;
+	}
+	.scroll-bar view{
+		flex:1;
+	}
 	
 </style>
