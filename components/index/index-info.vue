@@ -1,15 +1,17 @@
 <template>
-	<view class="index-list">
+	<view class="index-list animated fadeInLeft fast">
 		<view class="index-info">
 			<view>
 				<image :src="item.avater" mode="widthFix" lazy-load></image>
 				<text>良春原野</text>
 			</view>
-			<view>
-				<view class="icon iconfont icon-zengjia"></view>
-				<text>关注</text>
-				<view class="icon iconfont icon-guanbi"></view>
+
+			<view v-if="!iscare && isshowcare" class="info-do">
+				<view class="icon iconfont icon-zengjia" @tap="guanzhu"></view>
+				<text @tap="guanzhu">关注</text>
+				<view class="icon iconfont icon-guanbi" @tap="guanbi"></view>
 			</view>
+
 		</view>
 		<view class="index-mediatitle">
 			{{ item.title }}
@@ -29,10 +31,10 @@
 		</view>
 		<view class="index-mediado">
 			<view>
-				<view class="icon iconfont icon-icon_xiaolian-mian"></view>
-				<text>{{ item.ding }}</text>
-				<view class="icon iconfont icon-kulian"></view>
-				<text>{{ item.cai }}</text>
+				<view class="icon iconfont icon-icon_xiaolian-mian" @tap="caozuoding()" :class="{do:isdo == 1}"></view>
+				<text >{{ ding }}</text>
+				<view class="icon iconfont icon-kulian" @tap="caozuocai" :class="{do:isdo == -1}"></view>
+				<text>{{ cai }}</text>
 			</view>
 			<view>
 				<view class="icon iconfont icon-pinglun1"></view>
@@ -46,13 +48,58 @@
 
 <script>
 	export default{
+		data(){
+			return{
+				iscare:this.item.iscare,
+				isshowcare:this.item.isshowcare,
+				ding:this.item.ding,
+				cai:this.item.cai,
+				isdo:this.item.isdo,
+			}
+			
+		},
 		props:{
 			item:Object
+		},
+		methods:{
+			guanbi(){
+				this.isshowcare = false;
+			},
+			guanzhu(){
+				this.iscare = true;
+				//api的界面 交互反馈
+				uni.showToast({
+					title:"关注成功"
+				})
+			},
+			caozuoding(){
+				if(this.isdo == 0){
+					this.isdo = 1;
+					this.ding = Number(this.ding) + 1;
+				}else if(this.isdo == -1){
+					this.isdo = 1;
+					this.cai = Number(this.cai) - 1;
+					this.ding = Number(this.ding) + 1;
+				}else{}
+			},
+			caozuocai(){
+				if(this.isdo == 0){
+					this.isdo = -1;
+					this.cai = Number(this.cai) + 1;
+				}else if(this.isdo == 1){
+					this.isdo = -1;
+					this.cai = Number(this.cai) + 1;
+					this.ding = Number(this.ding) - 1;
+				}else{}
+			
+			}
 		}
 	}
 </script>
 
-<style scoped>
+<style scoped >
+	
+	
 	.index-list {
 		padding: 20rpx;
 		border-bottom: 1rpx solid #EEEEEE;
@@ -76,17 +123,17 @@
 	.index-info > view:nth-of-type(1) > text{
 		color:#999999;	
 	}
-	.index-info > view:nth-of-type(2){
+	.index-info .info-do{
 		display: flex;
 		align-items: center;
 	}
-	.index-info > view:nth-of-type(2) > view:nth-of-type(1){
+	.index-info .info-do > view:nth-of-type(1){
 		color: #010101;
 	}
-	.index-info > view:nth-of-type(2) > text{
+	.index-info .info-do > text{
 		color: #010101;
 	}
-	.index-info > view:nth-of-type(2) > view:nth-of-type(2){
+	.index-info .info-do > view:nth-of-type(2){
 		color: #D5D5D5;
 		margin-left: 10rpx;
 	}
@@ -143,6 +190,9 @@
 	}
 	.index-mediado > view:nth-of-type(2) > view:nth-of-type(2){
 		margin-left: 20rpx;
+	}
+	.do{
+		color:#FEDE33;
 	}
 	
 </style>

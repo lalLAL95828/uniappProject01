@@ -1,38 +1,43 @@
 <template>
 	<view>
-		<view class="scroll-top-view">
-			<scroll-view scroll-x="true" class="index-scroll-bar">
-				<block v-for="(item, index) in scrolldata" :key="item.id">
-					<view class="itemview" :class="{active: choosebar == index}" @tap="bartag(index)">{{item.name}}</view>
-				</block>
-			</scroll-view>
-		</view>
-		<!-- <view class="index-scroll-content">
-			<scroll-view scroll-y="true" >
-				<block v-for="(item, index) in itemsdata" :key = index>
-					<index-info :item="item"></index-info>
-				</block>
-			</scroll-view>
-		</view> -->
+		<index-scroll-bar :scrolldata="scrolldata" :choosebar="choosebar" @bartap="bartag"></index-scroll-bar>
 		
-
-		
-	
-		
-		<block v-for="(item, index) in itemsdata" :key = index>
-			<index-info :item="item"></index-info>
-		</block>
+		<swiper class="index-swiper-box" 
+		:style="{'height': scrollheight + 'px'}" 
+		:current="choosebar"
+		@change="tapchangefn">
+			<swiper-item v-for="(items, index) in listitemsdata" :key="index">
+				<scroll-view scroll-y="true" style="height: 100%; " @scrolltolower="loadmore(index)">
+					<template v-if="items.itemsdata.length > 0">
+						<block v-for="(item, index01) in items.itemsdata" :key="index01">
+							<index-info :item="item"></index-info>
+						</block>
+						<!-- 上拉加载 -->
+						<shang-la :shangla="items.shangla"></shang-la>
+					</template>
+					<template v-else>
+						<no-thing></no-thing>
+					</template>
+				</scroll-view>
+			</swiper-item>
+		</swiper>
 	</view>
 </template>
 
 <script>
 	import indexInfo from "../../components/index/index-info.vue";
-	
+	import indexScrollBar from "../../components/index/index-scroll.vue";
+	import shangLa from "../../components/common/loadmore.vue"
+	import noThing from "../../components/common/nothing.vue"
 	
 	export default {
 		data() {
 			return {
+				//index主内容的高度
+				scrollheight:0,
+				//tapbar与swiper通信参数
 				choosebar:0,
+				//tapbar的内容
 				scrolldata:[
 					{
 						name:"体育",
@@ -65,16 +70,253 @@
 					{
 						name:"物理",
 						id:"wuli"
-					},
-					{
-						name:"科学",
-						id:"kexue"
-					},
+					}
 				],
-				itemsdata:[
+				//swiper的内容，与tapbar对应
+				listitemsdata:[
 					{
+						shangla:"上拉加载更多",
+						itemsdata:[
+							{
+								avater:"../../static/demo/userpic/6.jpg",
+								title:"体育",
+								medio:"../../static/demo/datapic/1.jpg",
+								mediotype:"img",
+								iscare:true,
+								isdo:0,
+								isshowcare:true,
+								// meidioinfo:["20w", "4:20"],
+								ding:"10",
+								cai:"11",
+								comment:"18",
+								forward:"7"
+							},
+							{
+								avater:"../../static/demo/userpic/6.jpg",
+								title:"又是任性的一天",
+								iscare:true,
+								isdo:0,
+								isshowcare:true,
+								medio:"../../static/demo/datapic/1.jpg",
+								mediotype:"vedio",
+								meidioinfo:["20w", "4:20"],
+								ding:"10",
+								cai:"11",
+								comment:"18",
+								forward:"7"
+							},
+							{
+								avater:"../../static/demo/userpic/6.jpg",
+								title:"又是任性的一天",
+								iscare:false,
+								isdo:0,
+								isshowcare:true,
+								medio:"../../static/demo/datapic/1.jpg",
+								mediotype:"vedio",
+								meidioinfo:["20w", "4:20"],
+								ding:"10",
+								cai:"11",
+								comment:"18",
+								forward:"7"
+							},
+						]
+					},
+					{
+						shangla:"上拉加载更多",
+						itemsdata:[
+							{
+								avater:"../../static/demo/userpic/6.jpg",
+								title:"美术",
+								iscare:false,
+								isdo:0,
+								isshowcare:true,
+								medio:"../../static/demo/datapic/1.jpg",
+								mediotype:"img",
+								// meidioinfo:["20w", "4:20"],
+								ding:"10",
+								cai:"11",
+								comment:"18",
+								forward:"7"
+							},
+							{
+								avater:"../../static/demo/userpic/6.jpg",
+								title:"又是任性的一天",
+								iscare:true,
+								isdo:0,
+								isshowcare:true,
+								medio:"../../static/demo/datapic/1.jpg",
+								mediotype:"vedio",
+								meidioinfo:["20w", "4:20"],
+								ding:"10",
+								cai:"11",
+								comment:"18",
+								forward:"7"
+							},
+							{
+								avater:"../../static/demo/userpic/6.jpg",
+								title:"又是任性的一天",
+								iscare:false,
+								isdo:0,
+								isshowcare:true,
+								medio:"../../static/demo/datapic/1.jpg",
+								mediotype:"img",
+								// meidioinfo:["20w", "4:20"],
+								ding:"10",
+								cai:"11",
+								comment:"18",
+								forward:"7"
+							},
+							{
+								avater:"../../static/demo/userpic/6.jpg",
+								title:"又是任性的一天",
+								iscare:false,
+								isdo:0,
+								isshowcare:true,
+								medio:"../../static/demo/datapic/1.jpg",
+								mediotype:"vedio",
+								meidioinfo:["20w", "4:20"],
+								ding:"10",
+								cai:"11",
+								comment:"18",
+								forward:"7"
+							}
+						]
+					},
+					{
+						shangla:"上拉加载更多",
+						itemsdata:[
+							{
+								avater:"../../static/demo/userpic/6.jpg",
+								title:"自然",
+								iscare:false,
+								isdo:0,
+								isshowcare:true,
+								medio:"../../static/demo/datapic/1.jpg",
+								mediotype:"img",
+								// meidioinfo:["20w", "4:20"],
+								ding:"10",
+								cai:"11",
+								comment:"18",
+								forward:"7"
+							},
+							{
+								avater:"../../static/demo/userpic/6.jpg",
+								title:"又是任性的一天",
+								iscare:true,
+								isdo:0,
+								isshowcare:true,
+								medio:"../../static/demo/datapic/1.jpg",
+								mediotype:"vedio",
+								meidioinfo:["20w", "4:20"],
+								ding:"10",
+								cai:"11",
+								comment:"18",
+								forward:"7"
+							},
+							{
+								avater:"../../static/demo/userpic/6.jpg",
+								title:"又是任性的一天",
+								iscare:false,
+								isdo:0,
+								isshowcare:true,
+								medio:"../../static/demo/datapic/1.jpg",
+								mediotype:"img",
+								// meidioinfo:["20w", "4:20"],
+								ding:"10",
+								cai:"11",
+								comment:"18",
+								forward:"7"
+							},
+							{
+								avater:"../../static/demo/userpic/6.jpg",
+								title:"又是任性的一天",
+								iscare:false,
+								isdo:0,
+								isshowcare:true,
+								medio:"../../static/demo/datapic/1.jpg",
+								mediotype:"vedio",
+								meidioinfo:["20w", "4:20"],
+								ding:"10",
+								cai:"11",
+								comment:"18",
+								forward:"7"
+							},
+							{
+								avater:"../../static/demo/userpic/6.jpg",
+								title:"又是任性的一天",
+								iscare:false,
+								isdo:0,
+								isshowcare:true,
+								medio:"../../static/demo/datapic/1.jpg",
+								mediotype:"img",
+								// meidioinfo:["20w", "4:20"],
+								ding:"10",
+								cai:"11",
+								comment:"18",
+								forward:"7"
+							},
+							{
+								avater:"../../static/demo/userpic/6.jpg",
+								title:"又是任性的一天",
+								iscare:false,
+								isdo:0,
+								isshowcare:true,
+								medio:"../../static/demo/datapic/1.jpg",
+								mediotype:"vedio",
+								meidioinfo:["20w", "4:20"],
+								ding:"10",
+								cai:"11",
+								comment:"18",
+								forward:"7"
+							}
+						]
+					},
+					{},
+					{},
+					{},
+					{},
+					{},
+				],
+				
+			}
+		},
+		components:{
+			indexInfo,
+			indexScrollBar,
+			shangLa,
+			noThing,
+		},
+		onLoad() {
+			//获取系统信息
+			uni.getSystemInfo({
+			    success: (res) => {
+					let screenwidth = res.screenWidth;
+					this.scrollheight = res.windowHeight - (100/750)*screenwidth-1;
+			    }
+			});
+		},
+		methods: {
+			bartag(index){
+				this.choosebar = index
+			},
+			tapchangefn(e){
+				this.choosebar = e.detail.current;
+			},
+			loadmore(index){
+				if(this.listitemsdata[index].shangla != "上拉加载更多"){
+					return ;
+				}
+				//修改状态
+				this.listitemsdata[index].shangla = "加载中";
+				//获取数据
+				setTimeout(() => {
+					//获取完成
+					let returndata = {
 						avater:"../../static/demo/userpic/6.jpg",
-						title:"又是任性的一天",
+						title:"美术",
+						iscare:false,
+						isdo:0,
+						isshowcare:true,
 						medio:"../../static/demo/datapic/1.jpg",
 						mediotype:"img",
 						// meidioinfo:["20w", "4:20"],
@@ -82,77 +324,31 @@
 						cai:"11",
 						comment:"18",
 						forward:"7"
-					},
-					{
-						avater:"../../static/demo/userpic/6.jpg",
-						title:"又是任性的一天",
-						medio:"../../static/demo/datapic/1.jpg",
-						mediotype:"vedio",
-						meidioinfo:["20w", "4:20"],
-						ding:"10",
-						cai:"11",
-						comment:"18",
-						forward:"7"
-					},
-					{
-						avater:"../../static/demo/userpic/6.jpg",
-						title:"又是任性的一天",
-						medio:"../../static/demo/datapic/1.jpg",
-						mediotype:"vedio",
-						meidioinfo:["20w", "4:20"],
-						ding:"10",
-						cai:"11",
-						comment:"18",
-						forward:"7"
-					},
-				]
+					};
+					this.listitemsdata[index].itemsdata.push(returndata);
+					this.listitemsdata[index].shangla = "上拉加载更多";
+				}, 1000);
+				// this.listitemsdata[index].shangla = "没有更多数据了";
 			}
 		},
-		components:{
-			indexInfo,
-		},
-		onLoad() {
-
-		},
-		
-		methods: {
-			bartag(index){
-				this.choosebar = index
+		//监听原生标题导航按钮点击事件
+		onNavigationBarButtonTap(e){
+			// console.log(JSON.stringify(e));
+			if(e.index == 1){
+				uni.navigateTo({
+					url: '../add-input/add-input',
+				});
 			}
+		},
+		onNavigationBarSearchInputClicked(){
+			uni.navigateTo({
+				url: '../search/search',
+			});
 		}
 	}
 </script>
 
 <style>
-
 	
-	
-	
-	.scroll-top-view{
-		/* overflow: hidden; */
-	}
-	.index-scroll-bar{
-		border-bottom: 1px solid #c8c7cc;
-		white-space: nowrap;
-		width: 100%;
-		overflow: hidden;
-	}
-	.index-scroll-bar .itemview{
-		display: inline-block;
-		text-align: center;
-		line-height: 100rpx;
-		width: 100rpx;
-		color: #555;
-	}
-	.index-scroll-bar .active{
-		color:#09BB07;
-	}
-	
-	
-	
-	.index-scroll-content{
-		width: 100%;
-		height: calc(100%-100rpx);
-	}
 
 </style>

@@ -17,7 +17,7 @@
 	@import url("./common/uni.css");
 	@import url("./common/icon.css");
 	/* 引入动画库 */
-	@import url("./common/animate_rollin.css");
+	@import url("./common/animates.css");
 	/* 引入全部的字体图标 */
 	@import url("./common/iconfont.css");
 </style>

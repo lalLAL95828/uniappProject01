@@ -4,6 +4,10 @@
 			"path":"pages/index/index",
 			"style":{
 				"app-plus":{
+					//关闭默认竖向导航条
+					"scrollIndicator":"none",
+					//关闭页面回弹效果，下拉时候的默认样式
+					"bounce":"none",
 					"titleNView":{
 						"backgroundColor":"#FFFFFF",
 						"searchInput":{
@@ -67,6 +71,44 @@
             "style" : {}
         }
         
+        ,{
+            "path" : "pages/search/search",
+            "style" : {
+				"app-plus":{
+					//关闭默认竖向导航条
+					"scrollIndicator":"none",
+					//关闭页面回弹效果，下拉时候的默认样式
+					"bounce":"none",
+					"titleNView":{
+						"autoBackButton":false,
+						"backgroundColor":"#FFFFFF",
+						"searchInput":{
+							"align":"left",
+							"backgroundColor":"#F7F7F7",
+							"placeholder":"搜索糗事",
+							"disabled":false,
+							"borderRadius":"10px"
+						},
+						"buttons":[
+							{
+								"color":"#000000",
+								"float":"right",
+								"fontSize":"16px",
+								"text":"取消"
+							}
+						]
+					}
+				}
+			}
+        }
+        ,{
+            "path" : "pages/add-input/add-input",
+            "style" : {
+				"app-plus":{
+					"titleNView":false
+				}
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
