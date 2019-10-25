@@ -60,7 +60,14 @@
 		
 		{
             "path" : "pages/news/news",
-            "style" : {}
+            "style" : {
+				"app-plus":{
+					//关闭默认竖向导航条
+					"scrollIndicator":"none",
+					"titleNView":false,
+					"bounce":"none"
+				}
+			}
         }
         ,{
             "path" : "pages/paper/paper",

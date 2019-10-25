@@ -13,42 +13,30 @@
 		</view>
 		
 		<!-- 上传多张图片 -->
-		<view class="uni-uploader">
-			<view class="uni-uploader-head">
-				<view class="uni-uploader-title">点击可预览选好的图片</view>
-				<view class="uni-uploader-info">{{imageList.length}}/9</view>
-			</view>
-			<view class="uni-uploader-body">
-				<view class="uni-uploader__files">
-					<block v-for="(image,index) in imageList" :key="index">
-						<view class="uni-uploader__file">
-							<view class="icon iconfont icon-shanchu" @tap="delect(index)"></view>
-							<image class="uni-uploader__img" :src="image" :data-src="image" @tap="previewImage"></image>
-						</view>
-					</block>
-					<view class="uni-uploader__input-box">
-						<view class="uni-uploader__input" @tap="chooseImage"></view>
-					</view>
+		<upload-image @upload="uploadimagefn"></upload-image>
+		<!-- 弹出组件 -->
+		<uni-popup ref="popup"  @change="popupchangefn" :show="popupshow">
+			<view class="gonggao">
+				<view class="popupimage">
+					<image src="../../static/addinput.png" mode="widthFix"></image>
 				</view>
+				<view>1.涉及黄色，政治，广告及骚扰信息</view>
+				<view>2.涉及黄色，政治，广告及骚扰信息</view>
+				<view>3.涉及黄色，政治，广告及骚扰信息</view>
+				<view>4.涉及黄色，政治，广告及骚扰信息</view>
+				<button type="default" @tap="hidePopup">朕知道了</button>
 			</view>
-		</view>
+		</uni-popup>
 	</view>
 </template>
 
 <script>
-	import permision from "@/common/permission.js"
+	
 	import uniNavBar from "../../components/uni-nav-bar/uni-nav-bar.vue"
+	import uploadImage from "../../components/common/upload-image.vue"
+	import uniPopup from "../../components/uni-popup/uni-popup.vue"
+	
 	let wholook = ['所有人可见', '仅自己可见'];
-	var sourceType = [
-		['camera'],
-		['album'],
-		['camera', 'album']
-	]
-	var sizeType = [
-		['compressed'],
-		['original'],
-		['compressed', 'original']
-	]
 	export default {
 		
 		data() {
@@ -56,25 +44,50 @@
 				lookinfo:'所有人可见',
 				title:"title",
 				textareavalue:"",
-				imageList: [],
-				sourceTypeIndex: 2,
-				sourceType: ['拍照', '相册', '拍照或相册'],
-				sizeTypeIndex: 2,
-				sizeType: ['压缩', '原图', '压缩或原图'],
-				countIndex: 8,
-				count: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+				popupshow:false,
+				popupcontent:"发的哈萨克绝代风华看就看",
+				popupcustom:true,
+				returnback:true
 			}
-		},
-		onUnload() {
-			this.imageList = [],
-			this.sourceTypeIndex = 2,
-			this.sourceType = ['拍照', '相册', '拍照或相册'],
-			this.sizeTypeIndex = 2,
-			this.sizeType = ['压缩', '原图', '压缩或原图'],
-			this.countIndex = 8;
 		},
 		components:{
 			uniNavBar,
+			uploadImage,
+			uniPopup,
+		},
+		onReady(){
+			this.popupshow = !this.popupshow
+		},
+		onBackPress(e) {
+			//如果textarea有内容的话，才执行保存，不然就直接返回
+			if(!this.textareavalue){
+				return false
+			}
+			if(this.returnback){
+				uni.showModal({
+					content:"是否保存为草稿",
+					cancelText:"不保存",
+					confirmText:"保存",
+					success:res => {
+						if(res.confirm){
+							console.log("保存")
+							
+						}else{
+							console.log("不保存")
+						};
+						this.returnback = false
+						//也会引发onBackPress事件
+						uni.navigateBack({
+							delta: 1,
+						});
+					}
+				});
+				//如何不加这一句，会直接返回 ，uni.showModal的内容会在返回页面显示
+				return true;
+			}else{
+				
+			}
+			
 		},
 		methods: {
 			back(){
@@ -83,7 +96,7 @@
 				});
 			},
 			submit(){
-				console.log("发布")
+				console.log("发布");
 			},
 			changefn(){
 				uni.showActionSheet({
@@ -94,142 +107,16 @@
 				    },
 				});
 			},
-			sourceTypeChange: function(e) {
-				this.sourceTypeIndex = parseInt(e.target.value)
+			//上传图片处理
+			uploadimagefn(arr){
+				console.log(arr);
 			},
-			sizeTypeChange: function(e) {
-				this.sizeTypeIndex = parseInt(e.target.value)
+			//弹窗
+			popupchangefn(obj){
+				// console.log(obj.show)
 			},
-			countChange: function(e) {
-				this.countIndex = e.target.value;
-			},
-			// 选择图片
-			chooseImage: async function() {
-				// #ifdef APP-PLUS
-				// TODO 选择相机或相册时 需要弹出actionsheet，目前无法获得是相机还是相册，在失败回调中处理
-				if (this.sourceTypeIndex !== 2) {
-					let status = await this.checkPermission();
-					if (status !== 1) {
-						return;
-					}
-				}
-				// #endif
-			
-				if (this.imageList.length === 9) {
-					let isContinue = await this.isFullImg();
-					console.log("是否继续?", isContinue);
-					if (!isContinue) {
-						return;
-					}
-				}
-				uni.chooseImage({
-					sourceType: sourceType[this.sourceTypeIndex],
-					sizeType: sizeType[this.sizeTypeIndex],
-					count: this.imageList.length + this.count[this.countIndex] > 9 ? 9 - this.imageList.length : this.count[this.countIndex],
-					success: (res) => {
-						this.imageList = this.imageList.concat(res.tempFilePaths);
-					},
-					fail: (err) => {
-						// #ifdef APP-PLUS
-						if (err['code'] && err.code !== 0 && this.sourceTypeIndex === 2) {
-							this.checkPermission(err.code);
-						}
-						// #endif
-						// #ifdef MP
-						uni.getSetting({
-							success: (res) => {
-								let authStatus = false;
-								switch (this.sourceTypeIndex) {
-									case 0:
-										authStatus = res.authSetting['scope.camera'];
-										break;
-									case 1:
-										authStatus = res.authSetting['scope.album'];
-										break;
-									case 2:
-										authStatus = res.authSetting['scope.album'] && res.authSetting['scope.camera'];
-										break;
-									default:
-										break;
-								}
-								if (!authStatus) {
-									uni.showModal({
-										title: '授权失败',
-										content: 'Hello uni-app需要从您的相机或相册获取图片，请在设置界面打开相关权限',
-										success: (res) => {
-											if (res.confirm) {
-												uni.openSetting()
-											}
-										}
-									})
-								}
-							}
-						})
-						// #endif
-					}
-				})
-			},
-			//判断图片是否已经到九张
-			isFullImg: function() {
-				return new Promise((res) => {
-					uni.showModal({
-						content: "已经有9张图片了,是否清空现有图片？",
-						success: (e) => {
-							if (e.confirm) {
-								this.imageList = [];
-								res(true);
-							} else {
-								res(false)
-							}
-						},
-						fail: () => {
-							res(false)
-						}
-					})
-				})
-			},
-			// 预览图片
-			previewImage: function(e) {
-				var current = e.target.dataset.src
-				uni.previewImage({
-					current: current,
-					urls: this.imageList
-				})
-			},
-			async checkPermission(code) {
-				let type = code ? code - 1 : this.sourceTypeIndex;
-				let status = permision.isIOS ? await permision.requestIOS(sourceType[type][0]) :
-					await permision.requestAndroid(type === 0 ? 'android.permission.CAMERA' :
-						'android.permission.READ_EXTERNAL_STORAGE');
-			
-				if (status === null || status === 1) {
-					status = 1;
-				} else {
-					uni.showModal({
-						content: "没有开启权限",
-						confirmText: "设置",
-						success: function(res) {
-							if (res.confirm) {
-								permision.gotoAppSetting();
-							}
-						}
-					})
-				}
-			
-				return status;
-			},
-			//删除图片
-			delect(index){
-				uni.showModal({
-					title: '提示',
-					content: '是否要删除该图片',
-					success: (res)=> {
-						if (res.confirm) {
-							this.imageList.splice(index,1);
-							this.$emit('uploud',this.imageList)
-						}
-					}
-				});
+			hidePopup(){
+				this.popupshow = !this.popupshow
 			}
 		}
 	}
@@ -250,25 +137,22 @@
 	}
 
 
-
-	/* 上传图片 */
-	.cell-pd {
-		padding: 22upx 30upx;
+	.gonggao{
+		width: 500upx;
 	}
-	.uni-uploader__file{
-		position: relative;
+	.popupimage{
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
-	.list-pd {
-		margin-top: 50upx;
+	.gonggao image{
+		width: 75%;
+		margin-bottom: 20upx;
 	}
-	.icon-shanchu{
-		position: absolute;
-		right: 0;
-		top: 0;
-		background: #333333;
-		color: #FFFFFF;
-		padding: 2upx 10upx;
-		border-radius:10upx;
-		z-index: 100;
+	.gonggao button{
+		margin-top: 20upx;
+		background: #FFE934;
+		color: #171606;
 	}
+	
 </style>

@@ -1,0 +1,17 @@
+@charset "UTF-8";
+.fja-cc{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.fja-bc{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.fja-sc{
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+

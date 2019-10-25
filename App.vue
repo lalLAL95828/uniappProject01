@@ -20,4 +20,6 @@
 	@import url("./common/animates.css");
 	/* 引入全部的字体图标 */
 	@import url("./common/iconfont.css");
+	/* 引入自定义的公共样式 */
+	@import url("./common/selfcommon.css");
 </style>
