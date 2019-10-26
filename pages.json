@@ -116,6 +116,36 @@
 				}
 			}
         }
+        ,{
+            "path" : "pages/huatitype/huatitype",
+            "style" : {
+				"navigationBarTitleText":"话题分类",
+				"app-plus":{
+					"bounce":"none"
+				}
+			}
+        }
+        ,{
+            "path" : "pages/huaticontent/huaticontent",
+            "style" : {
+            	"enablePullDownRefresh":true,//开启下拉刷新
+            	"app-plus":{
+            		"animationType": "slide-in-bottom",
+            		"animationDuration": 200,
+					//隐藏滚动条
+            		// "scrollIndicator":"none",
+            		"titleNView":{
+						//渐变
+            			"type":"transparent",
+            			"buttons":[
+            				{
+            					"type":"menu"
+            				}
+            			]
+            		}
+            	}
+            }
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

@@ -15,7 +15,7 @@
 			</view>
 			<view class="common-list-r-2">{{ item.title }}</view>
 			<view class="common-list-r-3">
-				<template v-if="item.contenttype == 'video'">
+				<block v-if="item.contenttype == 'video'">
 					<view class="viewComponentdo">
 						<view class="icon iconfont icon-bofang"></view>
 					</view>
@@ -23,9 +23,21 @@
 						<text>{{  item.playnum }}</text>次播放
 						<text style="margin-left:6px">{{  item.time }}</text>
 					</view>
-				</template>
-
-				<image :src="item.content" lazy-load mode="widthFix"></image>		
+					<image :src="item.content" lazy-load mode="widthFix"></image>
+				</block>
+				<block v-else-if="item.contenttype == 'url'">
+					<view class="urltemplate">
+						<view class="fja-sc" @tap="clickurl">
+							<image :src="item.content" mode="widthFix" lazy-load></image>
+							<view class="urlTitle">
+								{{ item.contenttitle }}
+							</view>
+						</view>
+					</view>
+				</block>
+				<block v-else-if="item.contenttype == 'img'">
+					<image :src="item.content" lazy-load mode="widthFix"></image>
+				</block>		
 			</view>
 			<view class="fja-bc common-list-r-4">
 				<view>{{ item.addree }}</view>
@@ -57,6 +69,9 @@
 			clickzan(){
 				this.$emit("clickzan")
 			},
+			clickurl(){
+				this.$emit("clickurl")
+			}
 			
 		}
 	}
@@ -133,8 +148,28 @@
 }
 .viewComponentInfo{
 	position: absolute;
-	bottom:10rpx;
 	right:10rpx;
-	color:#FFFFFF;
+	bottom:20rpx;
+	padding: 2rpx 15rpx;
+	border-radius: 30rpx;
+	color: #F7F7F6;
+	background-color: rgba(155,155,155,0.5);
+}
+.urltemplate{
+	width:100%;
+}
+.urltemplate > view{
+	padding:20rpx 10rpx;
+	border-radius: 10rpx;
+	background-color: #F7F7F7;
+}
+.urltemplate > view > image{
+	width:200rpx;
+	border-radius: 10rpx;
+}
+.urlTitle{
+	/* flex:1; */
+	line-height:40rpx;
+	margin:0 10rpx;
 }
 </style>

@@ -13,7 +13,7 @@
 							<index-info :item="item"></index-info>
 						</block>
 						<!-- 上拉加载 -->
-						<shang-la :shangla="items.shangla"></shang-la>
+						<load-more :shangla="items.shangla"></load-more>
 					</template>
 					<template v-else>
 						<no-thing></no-thing>
@@ -27,7 +27,7 @@
 <script>
 	import indexInfo from "../../components/index/index-info.vue";
 	import indexScrollBar from "../../components/index/index-scroll.vue";
-	import shangLa from "../../components/common/loadmore.vue"
+	import loadMore from "../../components/common/loadmore.vue"
 	import noThing from "../../components/common/nothing.vue"
 	
 	export default {
@@ -283,7 +283,7 @@
 		components:{
 			indexInfo,
 			indexScrollBar,
-			shangLa,
+			loadMore,
 			noThing,
 		},
 		onLoad() {
@@ -291,7 +291,7 @@
 			uni.getSystemInfo({
 			    success: (res) => {
 					let screenwidth = res.screenWidth;
-					this.scrollheight = res.windowHeight - (100/750)*screenwidth-1;
+					this.scrollheight = res.windowHeight-(100/750)*screenwidth-1;
 			    }
 			});
 		},
