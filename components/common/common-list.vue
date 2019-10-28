@@ -1,5 +1,5 @@
 <template>
-	<view class="common-list">
+	<view class="common-list animated bounceIn" :key="item.id ? item.id : ''">
 		<view class="common-list-l">
 			<image :src="item.avatar" lazy-load mode="widthFix"></image>
 		</view>

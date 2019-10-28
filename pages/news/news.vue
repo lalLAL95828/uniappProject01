@@ -187,19 +187,19 @@
 					huatilist:[
 						{
 							src:"../../static/demo/topicpic/1.jpeg",
-							title:"#淘宝记录簿#",
+							title:"#淘宝记录簿01#",
 							intro:"207斤到85斤的转变",
 							label:"动态5425 今日720",
 						},
 						{
 							src:"../../static/demo/topicpic/1.jpeg",
-							title:"#淘宝记录簿#",
+							title:"#淘宝记录簿02#",
 							intro:"207斤到85斤的转变",
 							label:"动态5425 今日720",
 						},
 						{
 							src:"../../static/demo/topicpic/1.jpeg",
-							title:"#淘宝记录簿#",
+							title:"#淘宝记录簿03#",
 							intro:"207斤到85斤的转变",
 							label:"动态5425 今日720",
 						},

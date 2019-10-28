@@ -17,7 +17,7 @@
 		methods:{
 			clickfn(){
 				uni.navigateTo({
-					url: '../../pages/huaticontent/huaticontent',
+					url: '../../pages/huaticontent/huaticontent?image='+ JSON.stringify(this.image),
 				});
 			}
 		}

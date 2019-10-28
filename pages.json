@@ -71,13 +71,60 @@
         }
         ,{
             "path" : "pages/paper/paper",
-            "style" : {}
+            "style" : {
+				"enablePullDownRefresh":true,
+				"app-plus":{
+					"scrollIndicator":"none",
+					"bounce":"none",
+					"titleNView":{
+						"titleText":"小纸条",
+						"buttons":[
+							{
+								"color":"#000000",
+								"float":"left",
+								"fontSize":"24px",
+								"fontSrc":"./static/iconfont.ttf",
+								"text":"\ue845"
+							},
+							{
+								"color":"#000000",
+								"float":"right",
+								"fontSize":"24px",
+								"fontSrc":"./static/iconfont.ttf",
+								"text":"\ue684"
+							}
+						]
+					}
+				}
+			}
         }
+		,{
+		    "path" : "pages/paper-chat/paper-chat",
+		    "style" : {
+		    	"app-plus":{
+		    		"animationType": "slide-in-bottom",
+		    		"animationDuration": 200,
+					//隐藏滚动条
+		    		"scrollIndicator":"none",
+					"bounce":"none",
+		    		"titleNView":{
+		    			"buttons":[
+		    				{
+		    					"color":"#000000",
+		    					// "float":"left",
+		    					"fontSize":"20px",
+		    					"fontSrc":"./static/iconfont.ttf",
+		    					"text":"\ue628"
+		    				}
+		    			]
+		    		}
+		    	}
+		    }
+		}
         ,{
             "path" : "pages/home/home",
             "style" : {}
         }
-        
         ,{
             "path" : "pages/search/search",
             "style" : {
@@ -133,7 +180,7 @@
             		"animationType": "slide-in-bottom",
             		"animationDuration": 200,
 					//隐藏滚动条
-            		// "scrollIndicator":"none",
+            		"scrollIndicator":"none",
             		"titleNView":{
 						//渐变
             			"type":"transparent",
