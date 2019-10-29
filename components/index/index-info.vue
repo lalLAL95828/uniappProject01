@@ -92,7 +92,8 @@
 					this.ding = Number(this.ding) - 1;
 				}else{}
 			
-			}
+			},
+			
 		}
 	}
 </script>

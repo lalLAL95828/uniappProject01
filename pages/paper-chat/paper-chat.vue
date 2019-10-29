@@ -236,7 +236,7 @@
 					//执行滚动条的位置变化
 					this.changeScrollTop();
 					//依然让input获取焦点，保持软键盘显示状态
-					console.log(this.$refs.chat)
+					// console.log(this.$refs.chat)
 					// this.$refs.chat.focus()
 					
 				}

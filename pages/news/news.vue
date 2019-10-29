@@ -126,12 +126,13 @@
 					itemsdata:[
 						{
 							avatar:"../../static/demo/topicpic/4.jpeg",
-							nicheng:"",
+							nicheng:"梁春原液",
 							age:"12",
 							sex:"girl",
 							iscare:false,
 							title:"川阿斯顿发送到记得发世界的看法",
 							contenttype:"img",
+							contentArray:["../../static/demo/datapic/1.jpg","../../static/demo/datapic/2.jpg","../../static/demo/datapic/3.jpg"],
 							content:"../../static/demo/datapic/3.jpg",
 							addree:"深圳 大同盟",
 							zhuanfa:"15",

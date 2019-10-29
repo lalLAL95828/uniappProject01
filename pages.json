@@ -123,7 +123,22 @@
 		}
         ,{
             "path" : "pages/home/home",
-            "style" : {}
+            "style" : {
+            	"enablePullDownRefresh":false,
+            	"app-plus":{
+            		"bounce":"none",
+            		//隐藏滚动条
+            		"scrollIndicator":"none",
+            		"titleNView":{
+            			"titleText":"我",
+            			"buttons":[
+            				{
+            					"type":"menu"
+            				}
+            			]
+            		}
+            	}
+            }
         }
         ,{
             "path" : "pages/search/search",
@@ -192,6 +207,46 @@
             		}
             	}
             }
+        }
+        ,{
+            "path" : "pages/index-detail/index-detail",
+            "style" : {
+				"enablePullDownRefresh":false,
+            	"app-plus":{
+					"bounce":"none",
+            		"animationType": "slide-in-bottom",
+            		"animationDuration": 200,
+            		//隐藏滚动条
+            		"scrollIndicator":"none",
+            		"titleNView":{
+            			"titleText":"我是index详情",
+            			"buttons":[
+            				{
+            					"type":"menu"
+            				}
+            			]
+            		}
+            	}
+            }
+        }
+        ,{
+            "path" : "pages/login/login",
+            "style" : {
+				"app-plus":{
+					"bounce":"none",
+					"titleNView":{
+						"autoBackButton":false,
+						"type":"transparent",
+						"buttons":[
+							{
+								"float":"left",
+								"type":"close"
+							}
+						]
+					}
+					
+				}
+			}
         }
     ],
 	"globalStyle": {

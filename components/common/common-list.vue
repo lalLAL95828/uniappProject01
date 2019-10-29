@@ -1,5 +1,5 @@
 <template>
-	<view class="common-list animated bounceIn" :key="item.id ? item.id : ''">
+	<view class="common-list animated bounceIn" :key="item.id ? item.id : ''" @tap="detailfn">
 		<view class="common-list-l">
 			<image :src="item.avatar" lazy-load mode="widthFix"></image>
 		</view>
@@ -35,9 +35,14 @@
 						</view>
 					</view>
 				</block>
-				<block v-else-if="item.contenttype == 'img'">
+				<block v-else-if="item.contenttype == 'img'  && canclick">
 					<image :src="item.content" lazy-load mode="widthFix"></image>
-				</block>		
+				</block>
+				<block v-else-if="item.contenttype == 'img' && canclick == false">
+					<block v-for="(img, int) in item.contentArray" :key="int">
+						<image :src="img" lazy-load mode="widthFix" @tap="previewfn(int)"></image>
+					</block>
+				</block>
 			</view>
 			<view class="fja-bc common-list-r-4">
 				<view>{{ item.addree }}</view>
@@ -54,7 +59,11 @@
 <script>
 	export default {
 		props:{
-			item:Object
+			item:Object,
+			canclick:{
+				type:Boolean,
+				default:true,
+			}
 		},
 		methods:{
 			clickcare(){
@@ -71,6 +80,33 @@
 			},
 			clickurl(){
 				this.$emit("clickurl")
+			},
+			detailfn(){
+				if(this.canclick){
+					uni.navigateTo({
+						url: '../../pages/index-detail/index-detail?item=' + JSON.stringify(this.item),
+					});
+				}
+			},
+			//预览图片
+			previewfn(int){
+				console.log(int);
+				// 预览图片
+				uni.previewImage({
+					current:int,
+					indicator:"number",
+					urls: this.item.contentArray,
+					// longPressActions: {
+					// 	itemList: ['发送给朋友', '保存图片', '收藏'],
+					// 	success:(data) => {
+					// 		//此处执行相关的itemList按钮的操作
+					// 		console.log('选中了第' + (data.tapIndex + 1) + '个按钮,第' + (data.index + 1) + '张图片');
+					// 	},
+					// 	fail: (err) => {
+					// 		console.log(err.errMsg);
+					// 	}
+					// }
+				});
 			}
 			
 		}
