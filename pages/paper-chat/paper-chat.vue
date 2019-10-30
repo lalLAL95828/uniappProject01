@@ -6,20 +6,16 @@
 		:scroll-top="scrollTopHeight">
 			<block v-for="(item, index) in datainfo" :key="index">
 				<view class="scroll_item">
-					<paper-info :item="item"></paper-info>
+					<paper-info :item="item" ref="paperInfo"></paper-info>
 				</view>
-				
 			</block>
 		</scroll-view>
-
-
-
 		<view class="fja-bc inputshuru">
-			<input id="chat" ref="chat" type="text" placeholder="唠两句" @focus="inputfocusfn" @blur="inputblurfn" v-model="inputtext" @confirm="inputconfirmfn" confirm-hold=true />
+			<input id="chat" ref="chat" type="text" placeholder="唠两句" 
+			@focus="inputfocusfn" @blur="inputblurfn" v-model="inputtext" 
+			@confirm="inputconfirmfn" confirm-hold=true />
 			<view class="icon iconfont icon-fabu" @tap="inputconfirmfn"></view>
 		</view>
-
-		
 	</view>
 </template>
 
@@ -174,6 +170,9 @@
 				]
 			}
 		},
+		components:{
+			paperInfo,
+		},
 		onReady(){
 			this.changeScrollTop(true);
 		},
@@ -203,7 +202,7 @@
 					}
 				})
 			},
-			inputblurfn(){
+			inputblurfn(e){
 				uni.getSystemInfo({
 					success:(res) => {
 						var screenHeight = res.screenHeight;
@@ -236,9 +235,7 @@
 					//执行滚动条的位置变化
 					this.changeScrollTop();
 					//依然让input获取焦点，保持软键盘显示状态
-					// console.log(this.$refs.chat)
-					// this.$refs.chat.focus()
-					
+
 				}
 			},
 			//设置scroll-view的滚动条位置，目的就是为了让页面自动滚动到最新的位置处的消息位置处
@@ -267,9 +264,11 @@
 
 			},
 		},
-		components:{
-			paperInfo,
-		}
+		
+		onUnload(){
+			console.log("退出");
+			uni.hideKeyboard();		
+		},
 	}
 </script>
 

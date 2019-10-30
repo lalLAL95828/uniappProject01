@@ -248,6 +248,22 @@
 				}
 			}
         }
+        ,{
+            "path" : "pages/changeuserinfo/changeuserinfo",
+            "style" : {
+            	"enablePullDownRefresh":false,
+            	"app-plus":{
+            		"bounce":"none",
+            		"animationType": "slide-in-bottom",
+            		"animationDuration": 200,
+            		//隐藏滚动条
+            		"scrollIndicator":"none",
+            		"titleNView":{
+            			"titleText":"修改资料"
+            		}
+            	}
+            }
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

@@ -23,18 +23,25 @@
 		},
 		methods:{
 			getcodefn(){
-				var This = this;
-				//60s后再次获得
-				this.codetext = 60;
-				
-				var codexunhun = setInterval(function() {
-					This.codetext -= 1;
-					if(This.codetext == 0){
-						clearInterval(codexunhun);
-						This.codetext="再次获取";
-					}
-				},1000)
-				
+				if(this.codetext == "获取验证码" || this.codetext == "再次获取"){
+					var This = this;
+					//60s后再次获得
+					this.codetext = 60;
+					
+					var codexunhun = setInterval(function() {
+						This.codetext -= 1;
+						if(This.codetext == 0){
+							clearInterval(codexunhun);
+							This.codetext="再次获取";
+						}
+					},1000)
+				}else{
+					//提示60s后在试
+					uni.showToast({
+						title:"请稍后再试",
+						icon:"none"
+					})
+				}	
 			}
 		}
 	}

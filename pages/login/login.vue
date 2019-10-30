@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="guangfang_valatar">
-			<image src="../../static/loginhead.png" mode="widthFix" lazy-load></image>
+			<image :src="bgimgsrc" mode="widthFix" lazy-load></image>
 		</view>
 		<password :isshow='loginway'></password>
 		<phone-login :isshow='loginway'></phone-login>
@@ -17,13 +17,13 @@
 			<view class="other_border"></view>
 		</view>
 		<view class="other_loginway">
-			<view class='loginway' hover-class="">
-				<view class="icon iconfont icon-weixin weixin"></view>
+			<view class='loginway' hover-class="" @tap="tologin(weixinlogin)">
+				<view class="icon iconfont icon-weixin weixin" ></view>
 			</view>
-			<view class='loginway' hover-class="">
-				<view class="icon iconfont icon-xinlangweibo xinlangweibo"></view>
+			<view class='loginway' hover-class="" @tap="tologin(sinaweibologin)">
+				<view class="icon iconfont icon-xinlangweibo xinlangweibo" ></view>
 			</view>
-			<view class='loginway' hover-class="">
+			<view class='loginway' hover-class="" @tap="tologin(QQlogin)">
 				<view class="icon iconfont icon-QQ QQ"></view>
 			</view>
 		</view>
@@ -41,6 +41,10 @@
 			return {
 				loginway:"phone",
 				logintext:"验证码登录",
+				weixinlogin:"",
+				QQlogin:"",
+				sinaweibologin:"",
+				bgimgsrc:"../../static/loginhead.png",
 			}
 		},
 		components:{
@@ -51,7 +55,32 @@
 			changeloginway(){
 				this.loginway == "password" ? (this.loginway = "phone") : (this.loginway = "password"),
 				this.loginway == "password" ? (this.logintext = "密码登录") : (this.logintext = "验证码登录")
-			}
+			},
+			tologin(provider) {
+				var That = this;
+				uni.login({
+					provider: provider,
+					success: (res) => {
+						//执行登录后的操作
+						console.log('login success:', res);
+						//获取第三方返回的信息，可以用于昵称，头像等
+						uni.getUserInfo({
+							provider: provider,
+							success: function (infoRes) {
+								console.log('用户昵称为：' + infoRes.userInfo.nickname);
+								console.log(infoRes);
+								//使用QQ头像作为背景
+								That.bgimgsrc = infoRes.userInfo.figureurl_qq
+								//使用微信头像
+								// That.bgimgsrc = infoRes.userInfo.avatarUrl
+							}
+						});
+					},
+					fail: (err) => {
+						console.log('login fail:', err);
+					}
+				});
+			},
 		},
 		onNavigationBarButtonTap(e) {
 			if(e.index == 0){
@@ -59,13 +88,44 @@
 					delta:1,
 				})
 			}
-		}
+		},
+		onLoad() {
+			uni.getProvider({
+				service: 'oauth',
+				success: (result) => {
+					console.log(JSON.stringify(result))
+					this.providerList = result.provider.map((value) => {
+						switch (value) {
+							case 'weixin':
+								this.weixinlogin = 'weixin'
+								break;
+							case 'qq':
+								this.QQlogin = 'qq'
+								break;
+							case 'sinaweibo':
+								this.sinaweibologin = 'sinaweibo'
+								break;	
+						}
+					});
+		
+				},
+				fail: (error) => {
+					console.log('获取登录通道失败', error);
+				}
+			});
+		},
+		onUnload(){
+			console.log("退出");
+			bianlian = uni.hideKeyboard();	
+		},
+		
 	}
 </script>
 
 <style>
 .guangfang_valatar > image{
 	width: 100%;
+
 }
 .pplogin{
 	text-align: center;

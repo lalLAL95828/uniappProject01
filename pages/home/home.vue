@@ -78,6 +78,16 @@
 		},
 		methods: {
 			
+		},
+		onLoad() {
+			uni.hideKeyboard();
+		},
+		onNavigationBarButtonTap(e) {
+			if(e.index == 0){
+				uni.navigateTo({
+					url: '../changeuserinfo/changeuserinfo',
+				});
+			}
 		}
 	}
 </script>
