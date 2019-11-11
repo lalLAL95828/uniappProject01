@@ -2,6 +2,11 @@
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
+			// console.log(this.config)
+			//监听网络变化
+			this.config.network.on()
+			//热更新
+			this.config.upload()
 		},
 		onShow: function() {
 			console.log('App Show')

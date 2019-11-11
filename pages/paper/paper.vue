@@ -22,49 +22,49 @@
 				showfeature:"none",
 				datalist:[
 					{
-						id:"adahsdha",
+						id:"1",
 						image:"../../static/demo/topicpic/13.jpeg",
-						name:"好的撒旦",
+						name:"1",
 						time:"11：30",
 						content:"啊科技时代合法即使对方",
 						newinfonum:"20"
 					},
 					{
-						id:"adahsdha",
+						id:"2",
 						image:"../../static/demo/topicpic/13.jpeg",
-						name:"好的撒旦",
+						name:"2",
 						time:"11：30",
 						content:"啊科技时代合法即使对方",
 						newinfonum:"20"
 					},
 					{
-						id:"adahsdha",
+						id:"3",
 						image:"../../static/demo/topicpic/13.jpeg",
-						name:"好的撒旦",
+						name:"3",
 						time:"11：30",
 						content:"啊科技时代合法即使对方",
 						newinfonum:"20"
 					},
 					{
-						id:"adahsdha",
+						id:"4",
 						image:"../../static/demo/topicpic/13.jpeg",
-						name:"好的撒旦",
+						name:"4",
 						time:"11：30",
 						content:"啊科技时代合法即使对方",
 						newinfonum:"20"
 					},
 					{
-						id:"adahsdha",
+						id:"5",
 						image:"../../static/demo/topicpic/13.jpeg",
-						name:"好的撒旦",
+						name:"5",
 						time:"11：30",
 						content:"啊科技时代合法即使对方",
 						newinfonum:"20"
 					},
 					{
-						id:"adahsdha",
+						id:"6",
 						image:"../../static/demo/topicpic/13.jpeg",
-						name:"好的撒旦",
+						name:"6",
 						time:"11：30",
 						content:"啊科技时代合法即使对方",
 						newinfonum:"20"

@@ -67,6 +67,7 @@
 						uni.getUserInfo({
 							provider: provider,
 							success: function (infoRes) {
+								
 								console.log('用户昵称为：' + infoRes.userInfo.nickname);
 								console.log(infoRes);
 								//使用QQ头像作为背景
@@ -116,9 +117,8 @@
 		},
 		onUnload(){
 			console.log("退出");
-			bianlian = uni.hideKeyboard();	
+			// bianlian = uni.hideKeyboard();	
 		},
-		
 	}
 </script>
 

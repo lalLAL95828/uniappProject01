@@ -22,7 +22,7 @@
 			clickfn(){
 				this.$emit('chatfn', this.item.id)
 			}
-		}
+		},
 	}
 </script>
 

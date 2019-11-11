@@ -1,5 +1,9 @@
 import Vue from 'vue'
 import App from './App'
+import config from "./common/config.js"
+
+
+Vue.prototype.config = config
 
 Vue.config.productionTip = false
 

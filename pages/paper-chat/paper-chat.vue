@@ -30,142 +30,15 @@
 				scrollTopitemnum:0,
 				scrollTopHeight:0,
 				inputtext:"",
+				selfid:0,
 				datainfo:[
 					{
 						user:"other",
 						type:"text",
 						time:455432564,
 						showtime:true,
-						content:'toubu大大说的就是叫大家是否把水电费会尽快送达回房间卡士大夫阖家安康收到货·及时都会放假看上的风景SD卡交话费卡就是',
+						content:'头部测试信息',
 						userimage:"../../static/demo/demo6.jpg"
-					},
-					{
-						user:"self",
-						type:"text",
-						time:454453324,
-						showtime:false,
-						content:'知道了',
-						userimage:"../../static/demo/demo6.jpg",
-					},
-					{
-						user:"other",
-						type:"text",
-						time:456431345,
-						showtime:true,
-						content:'大大说的就是叫大家是否把水电费会尽快送达回房间卡士大夫阖家安康收到货·及时都会放假看上的风景SD卡交话费卡就是',
-						userimage:"../../static/demo/demo6.jpg"
-					},
-					{
-						user:"other",
-						type:"text",
-						time:455432564,
-						showtime:true,
-						content:'toubu大大说的就是叫大家是否把水电费会尽快送达回房间卡士大夫阖家安康收到货·及时都会放假看上的风景SD卡交话费卡就是',
-						userimage:"../../static/demo/demo6.jpg"
-					},
-					{
-						user:"self",
-						type:"text",
-						time:454453324,
-						showtime:false,
-						content:'知道了',
-						userimage:"../../static/demo/demo6.jpg",
-					},
-					{
-						user:"other",
-						type:"text",
-						time:455432564,
-						showtime:true,
-						content:'toubu大大说的就是叫大家是否把水电费会尽快送达回房间卡士大夫阖家安康收到货·及时都会放假看上的风景SD卡交话费卡就是',
-						userimage:"../../static/demo/demo6.jpg"
-					},
-					{
-						user:"self",
-						type:"text",
-						time:454453324,
-						showtime:false,
-						content:'知道了',
-						userimage:"../../static/demo/demo6.jpg",
-					},
-					{
-						user:"other",
-						type:"text",
-						time:455432564,
-						showtime:true,
-						content:'toubu大大说的就是叫大家是否把水电费会尽快送达回房间卡士大夫阖家安康收到货·及时都会放假看上的风景SD卡交话费卡就是',
-						userimage:"../../static/demo/demo6.jpg"
-					},
-					{
-						user:"self",
-						type:"text",
-						time:454453324,
-						showtime:false,
-						content:'知道了',
-						userimage:"../../static/demo/demo6.jpg",
-					},
-					{
-						user:"other",
-						type:"text",
-						time:455432564,
-						showtime:true,
-						content:'toubu大大说的就是叫大家是否把水电费会尽快送达回房间卡士大夫阖家安康收到货·及时都会放假看上的风景SD卡交话费卡就是',
-						userimage:"../../static/demo/demo6.jpg"
-					},
-					{
-						user:"self",
-						type:"text",
-						time:454453324,
-						showtime:false,
-						content:'知道了',
-						userimage:"../../static/demo/demo6.jpg",
-					},
-					{
-						user:"other",
-						type:"text",
-						time:455432564,
-						showtime:true,
-						content:'toubu大大说的就是叫大家是否把水电费会尽快送达回房间卡士大夫阖家安康收到货·及时都会放假看上的风景SD卡交话费卡就是',
-						userimage:"../../static/demo/demo6.jpg"
-					},
-					{
-						user:"self",
-						type:"text",
-						time:454453324,
-						showtime:false,
-						content:'知道了',
-						userimage:"../../static/demo/demo6.jpg",
-					},
-					{
-						user:"other",
-						type:"text",
-						time:455432564,
-						showtime:true,
-						content:'toubu大大说的就是叫大家是否把水电费会尽快送达回房间卡士大夫阖家安康收到货·及时都会放假看上的风景SD卡交话费卡就是',
-						userimage:"../../static/demo/demo6.jpg"
-					},
-					{
-						user:"self",
-						type:"text",
-						time:454453324,
-						showtime:false,
-						content:'知道了',
-						userimage:"../../static/demo/demo6.jpg",
-					},
-					{
-						user:"other",
-						type:"text",
-						time:455432564,
-						showtime:true,
-						content:'toubu大大说的就是叫大家是否把水电费会尽快送达回房间卡士大夫阖家安康收到货·及时都会放假看上的风景SD卡交话费卡就是',
-						userimage:"../../static/demo/demo6.jpg"
-					},
-					{
-						user:"self",
-						type:"text",
-						time:454453324,
-						showtime:false,
-						content:'知道了',
-						userimage:"../../static/demo/demo6.jpg",
 					},
 				]
 			}
@@ -176,9 +49,22 @@
 		onReady(){
 			this.changeScrollTop(true);
 		},
+		onNavigationBarButtonTap(e) {
+			console.log(e)
+		},
 		onLoad(e){
 			uni.setNavigationBarTitle({
 				title:e.id,
+			});
+			//设置聊天的主体，仅仅用于调试阶段
+			uni.setStorage({
+			    key: 'masterid',
+			    data: e.id,
+			    success: () => {
+			        console.log('设置masterid成功');
+					//设置当前的id
+					this.selfid = e.id
+			    }
 			});
 			uni.getSystemInfo({
 				success:(res) => {
@@ -187,7 +73,39 @@
 					this.screenHeight = screenHeight - 44 - statusBarHeight;
 					this.scrollheight = screenHeight - 94 - statusBarHeight;
 				}
-			})
+			});
+			//连接websocket
+			uni.connectSocket({
+			    url: 'ws://172.16.192.29:30000',
+			});
+			uni.onSocketOpen((res) =>  {
+			  console.log('WebSocket连接已打开！');
+			  //开始监听websocket返回的消息
+			  uni.onSocketMessage((res) => {
+				  var receivedata = JSON.parse(res.data)
+				 if(receivedata.id != this.selfid){
+					 var nowtime = new Date();
+					 var showtime = false;
+					 //超过30s的信息间隔就显示时间
+					 if(nowtime.getTime() > this.datainfo[this.datainfo.length-1].time + 30000){
+					 	showtime = true;
+					 };
+					 var confirmc = {
+					 	user:"other",
+					 	type:"text",
+					 	time:nowtime.getTime(),
+					 	showtime:showtime,
+					 	content:receivedata.text,
+					 	userimage:"../../static/demo/demo6.jpg",
+					 }
+					 this.datainfo.push(confirmc);
+					 // console.log('收到服务器别人的内容：' + res.data);
+					 this.changeScrollTop();
+				 }else{
+					 // console.log('收到服务器自己的内容：' + res.data);
+				 }  
+			  });
+			});
 		},
 		methods: {
 			inputfocusfn(e){
@@ -215,6 +133,7 @@
 				})
 			},
 			inputconfirmfn(){
+				var That = this;
 				if(this.inputtext != ''){
 					var nowtime = new Date();
 					var showtime = false;
@@ -223,6 +142,7 @@
 						showtime = true;
 					};
 					var confirmc = {
+						selfid: this.selfid,
 						user:"self",
 						type:"text",
 						time:nowtime.getTime(),
@@ -232,6 +152,8 @@
 					}
 					this.datainfo.push(confirmc);
 					this.inputtext="";
+					//利用websocket发送消息
+					That.config.wsSendTextfn('uni/chat', confirmc)
 					//执行滚动条的位置变化
 					this.changeScrollTop();
 					//依然让input获取焦点，保持软键盘显示状态
@@ -265,10 +187,10 @@
 			},
 		},
 		
-		onUnload(){
-			console.log("退出");
-			uni.hideKeyboard();		
-		},
+		// onUnload(){
+		// 	console.log("退出");
+		// 	uni.hideKeyboard();		
+		// },
 	}
 </script>
 
